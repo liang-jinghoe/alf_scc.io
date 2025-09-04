@@ -46,6 +46,7 @@ jobs:
                   name: dist
                   path: build
                   retention-days: 5
+
     sonarqube:
         runs-on: ubuntu-latest
         steps:
@@ -60,6 +61,7 @@ jobs:
             SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
           with:
             args: >
+              -Dsonar.java.binaries=build/classes/java/main
               -Dsonar.projectKey=liang-jinghoe_alf_scc.io
               -Dsonar.organization=liang-jinghoe
     push_image_dev:
