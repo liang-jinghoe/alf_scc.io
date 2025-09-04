@@ -62,6 +62,7 @@ jobs:
                     -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
                     -Dsonar.exclusions=**/frontend/**,**/node_modules/**
                     -Dsonar.branch.name=dev/sonarqube
+                    -Dsonar.sources=.
         
     push_image_dev:
         runs-on: ubuntu-latest
