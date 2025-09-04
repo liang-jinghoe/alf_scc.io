@@ -3,24 +3,6 @@ name: build
 on: [push, pull_request]
 
 jobs:
-    sonarqube:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v4
-          with:
-            # Disabling shallow clones is recommended for improving the relevancy of reporting
-            fetch-depth: 0
-        - name: SonarQube Scan
-          uses: SonarSource/sonarqube-scan-action@v5 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-          with:
-            args: >
-              -Dsonar.projectKey=liang-jinghoe_alf_scc.io
-              -Dsonar.organization=liang-jinghoe
-
-
     build:
         runs-on: ubuntu-latest
         strategy:
@@ -64,6 +46,22 @@ jobs:
                   name: dist
                   path: build
                   retention-days: 5
+    sonarqube:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4
+          with:
+            # Disabling shallow clones is recommended for improving the relevancy of reporting
+            fetch-depth: 0
+        - name: SonarQube Scan
+          uses: SonarSource/sonarqube-scan-action@v5 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+          with:
+            args: >
+              -Dsonar.projectKey=liang-jinghoe_alf_scc.io
+              -Dsonar.organization=liang-jinghoe
     push_image_dev:
         runs-on: ubuntu-latest
         if: ${{ github.repository == 'liang-jinghoe/alf_scc.io' && github.event_name == 'push' }}
